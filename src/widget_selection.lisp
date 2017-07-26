@@ -38,12 +38,14 @@
 
 
 (defun validate-selection (object val)
+  (cljw:widget-log "in validate-selection   object->~a  val->~a (options object) -> ~a ~%" object val (and (slot-boundp object 'options) (options object)))
   (if (slot-boundp object 'options) 
       (let ((valid (member val (options object) :test #'string= :key #'car)))
 	(if valid
 	    val
 	    (error "New value for ~a is invalid: ~a" object val))
-	val)))
+	val)
+      val))
 
 (defclass multiple-selection (%selection)
     ((value :type vector :initform (make-array 0 :fill-pointer 0 :adjustable t)
@@ -185,8 +187,11 @@ def _labels_to_values(k, obj):
 	 do (setf (gethash k _options_dict) v))
     (setf _options_labels (map 'vector #'car options))
     (setf _options_values (map 'vector #'cdr options))
+    (cljw:widget-log "initialize-instance of %selection value -> ~a~%" value)
     (if (not value)
-	(setf value (aref _options_values 0))))) 
+	(setf value (aref _options_values 0))
+	(setf value value))))
+
 (defmethod initialize-instance :after ((%selection select-multiple) &key)
   (with-slots (value _options_values) %selection
     (if (zerop (length value))
