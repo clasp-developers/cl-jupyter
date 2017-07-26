@@ -20,7 +20,8 @@
   (:metaclass traitlets:traitlet-class))
 
 (defclass %bounded-int (%int)
-  ((step :initarg :step :accessor step
+  ((value :validator validate-int)
+   (step :initarg :step :accessor step
 	 :type integer
 	 :initform 1
 	 :metadata (:sync t
@@ -40,6 +41,14 @@
 			 :help "Min value."))
    )
   (:metaclass traitlets:traitlet-class))
+
+(defun validate-int (object val)
+  (if (and (slot-boundp object 'min) (slot-boundp object 'max))
+      (let ((min (min object)) (max (max object)))
+	(cond ((< val min) min)
+	      ((> val max) max)
+	      (t val)))
+      val))
 
 (defclass int-text (%int)
   ()
@@ -156,7 +165,8 @@
   (:metaclass traitlets:traitlet-class))
 
 (defclass bounded-int-range(int-range)
-  ((step :initarg :step :accessor step
+  ((value :validator validate-int-range)
+   (step :initarg :step :accessor step
 	 :type integer
 	 :initform 1
 	 :metadata (:sync t
@@ -177,6 +187,21 @@
    )
   (:metaclass traitlets:traitlet-class))
 
+(defun validate-int-range (object val)
+  (flet ((enforce-min (val min) (if (< val min) min val))
+	 (enforce-max (val max) (if (> val max) max val)))
+	  (let ((low-val (cl:min (elt val 0) (elt val 1)))
+		(high-val (cl:max (elt val 0) (elt val 1))))
+	    ;; Now low-val <= high-val
+	    (if (and (slot-boundp object 'min) (slot-boundp object 'max))
+		(let ((min (min object))
+		      (max (max object)))
+		  (let ((low-val-min (enforce-min low-val min))
+			(high-val-min (enforce-min high-val min)))
+		    (let ((low-val-min-max (enforce-max low-val-min max))
+			  (high-val-min-max (enforce-max high-val-min max)))
+		      (vector low-val-min-max high-val-min-max))))
+		(vector low-val high-val)))))
 
 (defclass int-range-slider(bounded-int-range)
   ((orientation :initarg :orientation :accessor orientation
