@@ -40,7 +40,7 @@
 (defun validate-selection (object val)
   (cljw:widget-log "in validate-selection   object->~a  val->~a (options object) -> ~a ~%" object val (and (slot-boundp object 'options) (options object)))
   (if (slot-boundp object 'options) 
-      (let ((valid (member val (options object) :test #'string= :key #'car)))
+      (let ((valid (member val (options object) :test #'equal :key #'cdr)))
 	(if valid
 	    val
 	    (error "New value for ~a is invalid: ~a" object val))
