@@ -1,74 +1,77 @@
-(defpackage #:fredokun-utilities
-  (:nicknames #:fredo-utils)
+
+(defpackage #:cl-jupyter-widgets
+  (:nicknames #:cljw)
   (:use #:cl)
-  (:export #:[]
-           #:[]-contains
-           #:*example-enabled*
-           #:*example-equal-predicate*
-           #:example
-           #:example-progn
-           #:*logg-enabled*
-           #:*logg-level*
-           #:logg
-           #:vbinds
-           #:afetch
-	   #:while
-	   #:read-file-lines
-	   #:read-string-file
-	   #:read-binary-file
-	   #:quit))
-
-(defpackage #:myjson
-  (:use #:cl #:fredo-utils)
-  (:export #:parse-json
-	   #:parse-json-from-string
-	   #:encode-json
-	   #:encode-json-to-string
-           #:dumps))
-
-(defpackage #:cl-jupyter
-  (:use #:cl #:fredo-utils #:myjson)
+  (:shadow #:open #:close #:step #:min #:max)
   (:export
-   #:send-execute-raw-display-object ; cl-jupyter-widgets uses this
-   #:display
-   #:display-plain render-plain
-   #:display-html render-html
-   #:display-markdown render-markdown
-   #:display-latex render-latex
-   #:display-png render-png
-   #:display-jpeg render-jpeg
-   #:display-svg render-svg
-   #:display-json render-json
-   #:display-javascript render-javascript
-   #:message-header
-   #:message-content
-   #:message-buffers
-   #:message
-   #:*shell*
-   #:*kernel*
-   #:*parent-msg*
-   #:*default-special-bindings*
-   #:*special-variables*
-   #:kernel-start
-   #:[]
-   #:[]-contains))
+   #:*send-updates*
+   #:ipython-display
+   #:widget
+   #:widget-open
+   #:widget-send
+   #:widget-close
+   #:domwidget
+   #:int-slider
+   #:image
+   #:bool
+   #:dict
+   #:unicode
+   #:cunicode
+   #:tuple
+   #:color
+   #:instance
+   #:on-msg
+   #:on-displayed
+   ;;;For particular widgets
+   #:value
+   #:description
+   ;;;from widget_bool_7
+   #:checkbox
+   #:toggle-button
+   #:valid
+   ;;;from widget_int_7
+   #:int-text
+   #:bounded-int-text
+   #:int-slider
+   #:int-progress
+   #:int-range-slider
+   ;;;from widget_float_7
+   #:float-text
+   #:bounded-float-text
+   #:float-slider
+   #:float-progress
+   #:float-range-slider
+   ;;;from widget_selection_7
+   #:toggle-buttons
+   #:dropdown
+   #:radio-buttons
+   #:select
+   #:select-multiple
+   #:selection-slider
+   #:selection-range-slider
+   ;;;from widget_selectioncontainer_7
+   #:accordion
+   #:tab
+   ;;;from widget_button_7
+   #:button
+   ;;;from widget_box_7
+   #:box
+   #:vbox
+   #:hbox
+   ;;;from widget_color_7
+   #:color-picker
+   ;;;from widget_string_7
+   #:html
+   #:html-math
+   #:label
+   #:textarea
+   #:text
+   #:password
+   )
+  (:import-from :fredokun-utilities #:[] #:[]-contains))
 
-(defpackage #:cl-jupyter-user
-  (:use #:cl #:fredo-utils #:cl-jupyter #:common-lisp-user)
-  (:export 
-   #:display
-   #:display-plain render-plain
-   #:display-html render-html
-   #:display-markdown render-markdown
-   #:display-latex render-latex
-   #:display-png render-png
-   #:display-jpeg render-jpeg
-   #:display-svg render-svg
-   #:display-json render-json
-   #:display-javascript render-javascript
-   #:html #:latex #:svg
-   #:png-from-file
-   #:svg-from-file
-   #:quit))
-
-(in-package #:cl-jupyter)
+(defpackage #:traitlets
+  (:use #:cl)
+  (:export #:traitlet-class #:synced-object)
+  (:export #:traitlet-metadata
+	   #:effective-traitlet))
