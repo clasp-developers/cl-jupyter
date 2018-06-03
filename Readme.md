@@ -1,52 +1,30 @@
 
-cl-jupyter
+cl-jupyter-widgets
 ==========
 
-An enhanced interactive Shell for Common Lisp (based on the Jupyter protocol)
-
-```
- cl-jupyter: an enhanced interactive Common Lisp Shell
-(Version 0.7 - Ipython protocol v.5.0)
---> (C) 2014-2015 Frederic Peschanski (cf. LICENSE)
-                                 __________       
-                                /         /.      
-     .-----------------.       /_________/ |      
-    /                 / |      |         | |      
-   /+================+\ |      | |====|  | |      
-   ||cl-jupyter      || |      |         | |      
-   ||                || |      | |====|  | |      
-   ||* (fact 5)      || |      |         | |      
-   ||120             || |      |   ___   | |      
-   ||                || |      |  |166|  | |      
-   ||                ||/@@@    |   ---   | |      
-   \+================+/    @   |_________|./.     
-                         @           ..  ....'    
-     ..................@      __.'. '  ''         
-    /oooooooooooooooo//      ///                  
-   /................//      /_/                   
-   ------------------                          
-```
+Add jupyter widgets to cl-jupyter
 
 **Important** : this is beta-quality software, expect (and please report) some bugs... 
 
 ## Requirements ##
 
-To try cl-jupyter you need :
+To try cl-jupyter-widgets you need :
 
  - a Common lisp implementation, for now
 
    - either SBCL 1.2.x or above (with native threads enabled)
 
-   - or Clozure CL 1.10 or above (with native threads enabled) ...
-
-   - ECL is planned, for other implementations please fill an issue.
+   - Clasp
 
  - Quicklisp (cf. http://www.quicklisp.org)
 
+ - cl-jupyter
+ 
  - Python 3.x (cf. http://www.python.org)
 
  - Jupyter (a.k.a. IPython 4.x) or IPython 3.x (cf. http://www.jupyter.org)
 
+## Everything below this needs to be updated ##
 ## Quick install ##
 
 Please run the installation script :

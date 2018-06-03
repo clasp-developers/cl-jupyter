@@ -1,9 +1,9 @@
-
-cl-Jupyter Authors/Contributors
+cl-jupyter-widget Authors/Contributors
 ===============================
 
-Frederic Peschanski -- creator and maintainer
+Christian Schafmeister - Low level code
 
-Robert Dodier -- enhancements in startup/installation script
+Kevin Esslinger - Widgets
 
-Mike Mann -- installation script updates for Jupyter (Ipython 3.x) migration
+Alex Wood - traitlets
+
