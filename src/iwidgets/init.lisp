@@ -1,3 +1,7 @@
+(in-package :cl-jupyter-widgets)
 
 
-;;; do nothing for now
+;;; The action of load_ipython_extension(ip)
+;;;    is carried out in interface.lisp
+
+

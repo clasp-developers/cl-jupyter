@@ -4,7 +4,10 @@
 (defun kernel-start-hook (kernel)
   (cl-jupyter:logg 2 "In kernel-start-hook kernel -> ~a~%" kernel)
   (let ((comm-manager (make-comm-manager kernel)))
-    (setf (gethash kernel *kernel-comm-managers*) comm-manager)))
+    (cl-jupyter:logg 2 "Just did make-comm-manager~%")
+    (setf (gethash kernel *kernel-comm-managers*) comm-manager)
+    (cl-jupyter:logg 2 "register-target for kernel: ~a~%" kernel)
+    (register-target comm-manager "jupyter.widget" #'handle-comm-open)))
 
 (defun kernel-shutdown-hook (kernel)
   (cl-jupyter:logg 2 "In kernel-shutdown-hook kernel -> ~a~%" kernel)
@@ -12,10 +15,6 @@
     (if comm-manager
         (remhash kernel *kernel-comm-managers*)
         (warn "The kernel ~a was shutdown but no comm-manager could be found for it" kernel))))
-
-(eval-when (:execute :load-toplevel)
-  (loop for kernel in cl-jupyter:*started-kernels*
-        do (kernel-start-hook kernel)))
 
 (defun handle-comm-open (shell identities msg)
   (cl-jupyter:logg 2 "[Shell] handling 'comm_open' - parsing message~%")
@@ -67,6 +66,14 @@
     (cl-jupyter:logg 2 "    Unwinding after parse-json-from-string or comm-close~%"))
   ;; status back to idle
   (cl-jupyter::send-status-update (cl-jupyter::kernel-iopub (cl-jupyter::shell-kernel shell)) msg "idle" :key (cl-jupyter::kernel-key shell)))
+
+
+;;; Carries out the action of load_ipython_extension
+;;; It registers a comm-manager for the kernels that have been started already
+;;; and calls register-target on them
+(eval-when (:execute :load-toplevel)
+  (loop for kernel in cl-jupyter:*started-kernels*
+        do (kernel-start-hook kernel)))
 
 (defun cl-jupyter-widget-display-hook (widget iopub parent-msg execution-count key)
   (if (and widget (typep widget 'cljw:widget))
