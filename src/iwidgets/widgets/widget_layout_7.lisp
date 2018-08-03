@@ -141,6 +141,68 @@
 	   :initform :null
 	   :metadata (:sync t :json-name "width"
 			    :help "The width CSS attribute."))
+   ;;;Add slots for new grid widgets
+   (grid-auto-columns :initarg :grid-auto-columns :accessor grid-auto-columns
+                      :type unicode
+                      :initform :null
+                      :metadata (:sync t
+                                       :json-name "grid_auto_columns"
+                                       :help "The grid-auto-columns CSS attribute."))
+   (grid-auto-flow :initarg :grid-auto-flow :accessor grid-auto-flow
+                   :type 'cunicode
+                   :initform :null
+                   :metadata (:sync t
+                                    :json-name "grid_auto_flow"
+                                    :help "The grid-auto-flow CSS attribute."))
+   (grid-auto-rows :initarg :grid-auto-rows :accessor grid-auto-rows
+                   :type unicode
+                   :initform :null
+                   :metadata (:sync t
+                                    :caseless-str-enum (list* "column" "row" "row dense" "column dense" *css-properties*)
+                                    :json-name "grid_auto_rows"
+                                    :help "The grid-auto-flow CSS attribute."))
+   (grid-gap :initarg :grid-gap :accessor grid-gap
+             :type unicode
+             :initform :null
+             :metadata (:sync t
+                              :json-name "grid_gap"
+                              :help "The grid-gap CSS attribute."))
+   (grid-template-rows :initarg :grid-template-rows :accessor grid-template-rows
+                       :type unicode
+                       :initform :null
+                       :metadata (:sync t
+                                        :json-name "grid_template_rows"
+                                        :help "The grid-template-rows CSS attribute."))
+   (grid-template-columns :initarg :grid-template-columns :accessor grid-template-columns
+                          :type unicode
+                          :initform :null
+                          :metadata (:sync t
+                                           :json-name "grid_template_columns"
+                                           :help "The grid-template-columns CSS attribute."))
+   (grid-template-areas :initarg :grid-template-areas :accessor grid-template-areas
+                        :type unicode
+                        :initform :null
+                        :metadata (:sync t
+                                         :json-name "grid_template_areas"
+                                         :help "The grid-template-areas CSS attribute."))
+   (grid-row :initarg :grid-row :accessor grid-row
+             :type unicode
+             :initform :null
+             :metadata (:sync t
+                              :json-name "grid_row"
+                              :help "The grid-row CSS attribute."))
+   (grid-column :initarg :grid-column :accessor grid-column
+                :type unicode
+                :initform :null
+                :metadata (:sync t
+                                 :json-name "grid_column"
+                                 :help "The grid-column CSS attribute."))
+   (grid-area :initarg :grid-area :accessor grid-area
+              :type unicode
+              :initform :null
+              :metadata (:sync t
+                               :json-name "grid_area"
+                               :help "The grid-area CSS attribute."))
    )
   (:metaclass traitlets:traitlet-class)
   (:default-initargs
