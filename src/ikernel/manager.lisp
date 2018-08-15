@@ -28,7 +28,7 @@
   (cl-jupyter:logg 2 "register-comm   comm-id -> ~a~%" (comm-id comm))
   (unless (comm-id comm)
     (cl-jupyter:logg 2 "The comm-id for a comm in register-comm is NIL!!!!~%backtrace -> ~%")
-    (cl-jupyter:logg 2 "~a~%" (backtrace-as-string)))
+    (cl-jupyter:logg 2 "~a~%" (with-output-to-string (sout) (trivial-backtrace:print-backtrace-to-stream sout))))
   (let ((comm-id (comm-id comm)))
     (setf (kernel comm) (kernel self))
     (setf (gethash comm-id (comms self)) comm)

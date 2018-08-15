@@ -1,13 +1,13 @@
 
 (in-package #:cl-jupyter-widgets)
 
-(defvar *debug-cl-jupyter-widgets* t)
+(defvar *debug-cl-jupyter-widgets* nil)
 
 (eval-when (:execute :load-toplevel)
   (setf *debugger-hook*
 	#'(lambda (condition &rest args)
 	    (cl-jupyter:logg 0 "~a~%" condition)
-	    (cl-jupyter:logg 0 "~a~%" (fredokun-utilities::backtrace-as-string)))))
+	    (cl-jupyter:logg 0 "~a~%" (with-output-to-string (sout) (trivial-backtrace:print-backtrace-to-stream sout))))))
 
 (defmacro with-error-handling (msg &body body)
   (let ((wrn (gensym))
@@ -34,7 +34,7 @@
 		   (cl-jupyter:logg 2 "~a~%" ,msg)
 		   (cl-jupyter:logg 2 "An error occurred of type ~a~%" (class-name (class-of ,err)))
 ;;		   (cl-jupyter:logg 2 "~a~%" ,err)
-		   (cl-jupyter:logg 2 "~a~%" (backtrace-as-string)))))
+		   (cl-jupyter:logg 2 "~a~%" (with-output-to-string (sout) (trivial-backtrace:print-backtrace-to-stream sout))))))
 	   (progn ,@body))
        (simple-condition (,err)
 	 (format *error-output* "~&~A: ~%" (class-name (class-of ,err)))
@@ -46,16 +46,8 @@
 	 (format *error-output* "~&2An error occurred of type: ~A: ~%  ~S~%"
 		 (class-name (class-of ,err)) ,err)))))
 
-
-
-
-
-
-
-
 (defun json-clean (json)
   json)
-
 
 (defun extract-message-content (msg)
   (myjson:parse-json-from-string (cl-jupyter:message-content msg)))
